@@ -1,0 +1,8 @@
+settings.json
+*.o
+Makefile
+.qmake.stash
+.vscode/
+ReturnOfMonke
+TestSuite
+docs/*
