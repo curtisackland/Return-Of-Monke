@@ -10,14 +10,6 @@
  */
 #include "drop.h"
 
-/**
- * @brief Construct a new Drop:: Drop object
- * 
- * @param xPos of drop
- * @param yPos of drop
- * @param drop_type what item dropped
- * @param parent ItemGroup
- */
 Drop::Drop(double xPos, double yPos, DropTypes drop_type, QGraphicsItem * parent):QGraphicsItemGroup(parent){
     this->dropType = drop_type;
     setPos(xPos, yPos);
@@ -52,40 +44,18 @@ Drop::Drop(double xPos, double yPos, DropTypes drop_type, QGraphicsItem * parent
     drop->setBrush(brush);
 }
 
-/**
- * @brief Destroy the Drop:: Drop object
- * 
- */
 Drop::~Drop(){
 
 }
 
-/**
- * @brief checks if the drop is colliding with the other QtGraphicsItem
- * 
- * @param other QtGraphicsItem
- * @param mode type of collision
- * @return true if collision
- * @return false if no collision
- */
 bool Drop::collidesWithItem(const QGraphicsItem* other, Qt::ItemSelectionMode mode){
     return drop->collidesWithItem(other, mode);
 } 
 
-/**
- * @brief get the drop painter
- * 
- * @return QPainterPath 
- */
 QPainterPath Drop::shape() const {
     return drop->shape();
 }
 
-/**
- * @brief get the type of drop
- * 
- * @return drop type 
- */
 Drop::DropTypes Drop::getDropType(){
     return dropType;
 }

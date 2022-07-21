@@ -189,29 +189,14 @@ void Player::setSelectedGun(int selected){
     }
 }
 
-/**
- * @brief get the player hitbox/size
- * 
- * @return int lenght of hitbox
- */
 int Player::getPlayerHitBox(){
     return HITBOX_SIZE;
 }
 
-/**
- * @brief gets the player hit box as a QRectF object
- * 
- * @return QRectF of player hitbox
- */
 QRectF Player::getPlayerHitBoxRect() {
     return QRectF(0, 0, HITBOX_SIZE, HITBOX_SIZE);
 }
 
-/**
- * @brief set the guns of the player
- * 
- * @param gun new gun to set
- */
 void Player::setSelectedGunObj(Gun *gun) {
     if (selected_gun == 1) {
         inventory->setGunPrim(gun);
@@ -234,12 +219,6 @@ Gun* Player::getSelectedGun(){
     throw std::out_of_range("Selected gun is invalid");
 }
 
-/**
- * @brief checks if the player has the gun passed in the paremeter
- * 
- * @param type string for gun type
- * @return int 1 if primary gun matches, 2 if secondary gun matches, 0 if non matches
- */
 int Player::hasGunType(std::string type) {
     if (inventory->getGunPrim()->getGunType() == type) {
         return 1;
@@ -250,11 +229,6 @@ int Player::hasGunType(std::string type) {
     }
 }
 
-/**
- * @brief get player speed
- * 
- * @return double
- */
 double Player::getSpeed(){
     return SPEED;
 }

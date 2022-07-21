@@ -1,13 +1,4 @@
-/**
- * @file map.h
- * @author Curtis Ackland (cacklan@uwo.ca)
- * @brief Implementation of Map
- * @version 0.1
- * @date 2021-11-28
- * 
- * @copyright Copyright (c) 2021
- * 
- */
+
 #ifndef MAP_H
 #define MAP_H
 
@@ -16,11 +7,7 @@
 #include <QPoint>
 #include <vector>
 #include "tile.h"
-/**
- * @class Map   
- * @brief Creates a map for the game
- * 
- */
+
 class Map : public QGraphicsItemGroup{
 
     private:
@@ -31,6 +18,8 @@ class Map : public QGraphicsItemGroup{
     public:
         Map(int width, int length, QGraphicsItem *parent = nullptr);
         ~Map();
+        std::vector<QPoint*> enemySpawnLocations();
+        std::vector<QPoint*> dropSpawnLocations();
         Tile*** getMap();
         int getMapWidth();
         int getMapLength();

@@ -14,8 +14,8 @@
  * @brief Constuctor gives pistol in inventory to start and initalizes the rest to nothing
  */
 Inventory::Inventory(QRectF player, QGraphicsItem * parent){
-    gun_primary = new Gun("AR", player, parent);
-    gun_secondary = new Gun("Pistol", player, parent);
+    gun_primary = new Gun("Laser", player, parent);
+    gun_secondary = new Gun("RL", player, parent);
     setHealthAmount(0);
     setShieldAmount(0);
 }

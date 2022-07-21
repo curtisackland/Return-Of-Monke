@@ -128,20 +128,10 @@ bool View::getMouseDown(){
     return mouseDown;
 }
 
-/**
- * @brief gets the current window width
- * 
- * @return int window width
- */
 int View::getAdjustedWindowWidth(){
     return (this->windowHandle()->width() - 2);
 }
 
-/**
- * @brief gets the current window height
- * 
- * @return int window height
- */
 int View::getAdjustedWindowHeight(){
     return (this->windowHandle()->height() - 2);
 }

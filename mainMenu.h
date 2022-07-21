@@ -16,7 +16,6 @@
 #include <view.h>
 #include "menuButton.h"
 /**
- * @class MainMenu
  * @brief Creates a main menu screen
  * 
  */

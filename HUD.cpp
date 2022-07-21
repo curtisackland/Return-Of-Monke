@@ -87,12 +87,6 @@ GunInfo* HUD::getGunInfo() {
     return gunInfo;
 }
 
-/**
- * @brief resizing the game HUD
- * 
- * @param width new width of HUD
- * @param height new height of HUD
- */
 void HUD::resizeHud(double width, double height) {
     double barWidth = width / 4;
     double barHeight = 40; //height / 20;
@@ -104,5 +98,5 @@ void HUD::resizeHud(double width, double height) {
     reloadTimer->setPos(width - 100, height - 100);
 
     gunInfoBackground->setPos(width - 250, height - 200);
-    gunInfo->setPos(width - 250, height - 200);
+    gunInfo->setPos(width - 50, height - 200);
 }

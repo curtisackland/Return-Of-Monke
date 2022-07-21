@@ -49,7 +49,6 @@ Enemy::Enemy(std::string name, double initialX, double initialY, double initialD
     enemy->setBrush(brush);
 
     attackRange = new QGraphicsEllipseItem (-attackRadius, -attackRadius, attackRadius * 2, attackRadius * 2, this);
-    attackRange->setPen(Qt::NoPen);
 
     maxHealth = hp;
     health = hp;
@@ -71,19 +70,107 @@ Enemy::~Enemy(){
  * @brief changes enemy location to chase the player
  * @param target player class that contains the player's location
  */
-void Enemy::move(Player * target) {
-    if (!isDead()) {
-        double horizontal = target->pos().x() - pos().x(); 
-        double vertical = target->pos().y() - pos().y();
-        
-        double normalization = 1/sqrt(horizontal * horizontal + vertical * vertical);
-        
-        horizontal = horizontal * normalization;
-        vertical = vertical * normalization;
+void Enemy::move(QPoint player, Map *map) {
+    /*
+    for (int x = 0; x < 102; ++x) {
+        for (int y = 0; y < 102; ++y) {
+            map->getMap()[x][y]->getRect()->setBrush(QBrush(QColor(0, 0, 0, 0)));
+        }
+    }*/
+    std::list<Node*> fringe;
+    bool foundPlayer = false;
+    Node *startNode = new Node(0, sqrt((player.x() - this->x())*(player.x() - this->x()) + (player.y() - this->y())*(player.y() - this->y()))/50, (int) floor(this->x()/50), (int) floor(this->y()/50), '0');
+    int mapPlayerXpos = (int) floor(player.x()/50);
+    int mapPlayerYpos = (int) floor(player.y()/50);
+    fringe.push_back(startNode);
+    std::set<int> visited;
+    Node *playerNode;
+    while(!foundPlayer){
+        if (fringe.empty()) {
+            printf("No nodes left: pathfinding error\n");
+            break;
+        }
+        Node *currentNode = nullptr;
+        double lowestFCost = INFINITY;
+        for (Node *n : fringe) {
+            if (n->getFCost() < lowestFCost) {
+                currentNode = n;
+                lowestFCost = n->getFCost();
+            }
+        }
+        visited.insert(currentNode->getMapY()*map->getMapWidth() + currentNode->getMapX());
+        fringe.remove(currentNode);
+        //printf("%d\n", currentNode->getMapX());
+        //printf("%d\n", currentNode->getMapY());
+        if(map->getMap()[currentNode->getMapX()][currentNode->getMapY()] == map->getMap()[mapPlayerXpos][mapPlayerYpos]){
+            foundPlayer = true;
+            playerNode = currentNode;
+        } else {
+            //printf("X: %d | Y: %d\n", currentNode->getMapX(), currentNode->getMapY());
+            if(map->getMap()[currentNode->getMapX() + 1][currentNode->getMapY()]->getWalkable() && !visited.count(currentNode->getMapY()*map->getMapWidth() + (currentNode->getMapX() + 1))){
+                //map->getMap()[currentNode->getMapX() + 1][currentNode->getMapY()]->getRect()->setBrush(QBrush(QColor(255, 0, 0)));
+                //printf("1\n");
+                
+                double x = currentNode->getMapX() + 1;
+                double y = currentNode->getMapY();
+                //printf("%lf\n", (player.x()-x)*(player.x()-x) + (player.y()-y)*(player.y()-y));
+                Node *tempNode = new Node(currentNode->getGCost() + 1, abs((int) floor(player.x()/50) - x) + abs((int) floor(player.y()/50) - y), currentNode->getMapX() + 1, currentNode->getMapY(), 'E');
+                tempNode->setPrevNode(currentNode);
+                fringe.push_back(tempNode);
+            }
+            if(map->getMap()[currentNode->getMapX() - 1][currentNode->getMapY()]->getWalkable() && !visited.count(currentNode->getMapY()*map->getMapWidth() + (currentNode->getMapX() - 1))){
+                //map->getMap()[currentNode->getMapX() - 1][currentNode->getMapY()]->getRect()->setBrush(QBrush(QColor(255, 0, 0)));
+                //printf("2\n");
+                double x = currentNode->getMapX() - 1;
+                double y = currentNode->getMapY();
+                Node *tempNode = new Node(currentNode->getGCost() + 1, abs((int) floor(player.x()/50) - x) + abs((int) floor(player.y()/50) - y), currentNode->getMapX() - 1, currentNode->getMapY(), 'W');
+                tempNode->setPrevNode(currentNode);
+                fringe.push_back(tempNode);
+            }
+            if(map->getMap()[currentNode->getMapX()][currentNode->getMapY() + 1]->getWalkable() && !visited.count((currentNode->getMapY() + 1)*map->getMapWidth() + (currentNode->getMapX()))){
+                //map->getMap()[currentNode->getMapX()][currentNode->getMapY() + 1]->getRect()->setBrush(QBrush(QColor(255, 0, 0)));
+                //printf("3\n");
+                
+                double x = currentNode->getMapX();
+                double y = currentNode->getMapY() + 1;
+                Node *tempNode = new Node(currentNode->getGCost() + 1, abs((int) floor(player.x()/50) - x) + abs((int) floor(player.y()/50) - y), currentNode->getMapX(), currentNode->getMapY() + 1, 'S');
+                tempNode->setPrevNode(currentNode);
+                fringe.push_back(tempNode);
+            }
+            if(map->getMap()[currentNode->getMapX()][currentNode->getMapY() - 1]->getWalkable() && !visited.count((currentNode->getMapY() - 1)*map->getMapWidth() + (currentNode->getMapX()))){
+                //printf("4\n");
+                //map->getMap()[currentNode->getMapX()][currentNode->getMapY() - 1]->getRect()->setBrush(QBrush(QColor(255, 0, 0)));
 
-        enemy->setRotation(-180 * atan2(horizontal, vertical) / M_PI);
-        setPos(pos().x() + horizontal * movementSpeed, pos().y() + vertical * movementSpeed);
+                double x = currentNode->getMapX();
+                double y = currentNode->getMapY() - 1;
+                Node *tempNode = new Node(currentNode->getGCost() + 1, abs((int) floor(player.x()/50) - x) + abs((int) floor(player.y()/50) - y), currentNode->getMapX(), currentNode->getMapY() - 1, 'N');
+                tempNode->setPrevNode(currentNode);
+                fringe.push_back(tempNode);
+            }
+        } 
     }
+    
+    if(playerNode->getPrevNode() == nullptr){
+        printf("gottem\n");
+    } else {
+        Node *nextNode = playerNode;
+        char direction = nextNode->getDirection();
+        while(nextNode->getPrevNode() != startNode){
+            //map->getMap()[nextNode->getMapX()][nextNode->getMapY()]->getRect()->setBrush(QBrush(QColor(0, 0, 255)));
+            nextNode = nextNode->getPrevNode();
+            direction = nextNode->getDirection();
+        }
+        if(direction == 'N'){
+            setPos(pos().x(), pos().y() - movementSpeed);
+        } else if(direction == 'E'){
+            setPos(pos().x() + movementSpeed, pos().y());
+        } else if(direction == 'S'){
+            setPos(pos().x(), pos().y() + movementSpeed);
+        } else if(direction == 'W'){
+            setPos(pos().x() - movementSpeed, pos().y());
+        }
+    }
+
 }
 
 /**
@@ -101,8 +188,13 @@ bool Enemy::inRange(Player* target){
 void Enemy::attack(Player *target){
     if (attackCdTimeleft == 0){
         if (inRange(target)){
-            target->hit(damage);
-            attackCdTimeleft = attackCdFullTime;
+            if (name == "Tank"){
+                // Code to shoot at player
+            } 
+            else {
+                target->hit(damage);
+                attackCdTimeleft = attackCdFullTime;
+            }
         }
     }
 }
@@ -125,7 +217,6 @@ bool Enemy::collidesWithItem(const QGraphicsItem *other, Qt::ItemSelectionMode m
 void Enemy::hit(int dmg){
     health = health - dmg;
 }
-
 
 /**
  * @brief gets the enemy's health

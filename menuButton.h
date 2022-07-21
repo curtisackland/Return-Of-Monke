@@ -20,8 +20,7 @@
 #include <QRectF>
 #include <iostream>
 /**
- *  @class MenuButton
- *  @brief Class for making menu buttons for the main menu
+ * @brief Class for making menu buttons for the main menu
  * 
  */
 class MenuButton : public QGraphicsItemGroup {

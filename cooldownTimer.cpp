@@ -68,11 +68,6 @@ void CooldownTimer::setHideOnZero(bool h) {
     hideOnZero = h;
 }
 
-/**
- * @brief set color of bullet
- * 
- * @param b 
- */
 void CooldownTimer::setColor(QBrush b) {
     pie->setBrush(b);
 }

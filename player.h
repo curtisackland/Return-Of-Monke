@@ -30,7 +30,7 @@ class Player : public QGraphicsItemGroup{
     private:
         QGraphicsRectItem * player;
         const int HITBOX_SIZE = 30;
-        int health = 100;
+        int health = 10;
         int shield = 0;
         int melee_cd;
         int selected_gun;
