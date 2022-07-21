@@ -1,5 +1,5 @@
 #include "Node.h"
-
+//node
 Node::Node(double gcost, double hcost, int mapx, int mapy, char direction){
     fcost = gcost + hcost;
     this->gcost = gcost;
