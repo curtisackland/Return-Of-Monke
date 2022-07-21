@@ -13,6 +13,7 @@
 
 #include <QGraphicsTextItem>
 /**
+ * @class Score
  * @brief Displays the player's score
  * 
  */

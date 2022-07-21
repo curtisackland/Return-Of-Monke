@@ -1,9 +1,9 @@
 /**
  * @file drop.h
- * @author your name (you@domain.com)
- * @brief 
+ * @author Evan Goldrick (egoldric@uwo.ca)
+ * @brief Implementation of Drops
  * @version 0.1
- * @date 2021-11-20
+ * @date 2021-11-30
  * 
  * @copyright Copyright (c) 2021
  * 
@@ -17,7 +17,11 @@
 #include <QPen>
 #include <string.h>
 #include <iostream>
-
+/**
+ * @class Drop
+ * @brief Drop class the stores the information inregards to drops
+ * 
+ */
 class Drop : public QGraphicsItemGroup{
     public:
         enum DropTypes {Health, Shield, Pistol, AR, Laser, RocketLauncher, PistolAmmo, ARAmmo, LaserAmmo, RocketAmmo, ENUM_END};

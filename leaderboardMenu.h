@@ -1,7 +1,7 @@
 /**
  * @file leaderboardMenu.h
  * @author Calvin Nguyen (cnguy66@uwo.ca)
- * @brief 
+ * @brief header file for the leaderboard menu
  * @version 0.1
  * @date 2021-11-29
  * 
@@ -18,6 +18,7 @@
 #include "menuButton.h"
 #include "leaderboard.h"
 /**
+ * @class LeaderboardMenu
  * @brief Creates a leaderboard menu screen
  * 
  */

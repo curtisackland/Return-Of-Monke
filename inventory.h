@@ -1,3 +1,13 @@
+/**
+ * @file inventory.h
+ * @author Curtis Ackland (cacklan@uwo.ca), Calvin Nguyen
+ * @brief Implementation of the inventory
+ * @version 0.1
+ * @date 2021-11-30
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
 #ifndef INVENTORY_H
 #define INVENTORY_H
 

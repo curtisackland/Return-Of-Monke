@@ -1,3 +1,13 @@
+/**
+ * @file view.h
+ * @author Curtis Ackland (cacklan@uwo.ca)
+ * @brief Singleton to access the view
+ * @version 0.1
+ * @date 2021-11-15
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
 #ifndef VIEW_HEADER
 #define VIEW_HEADER
 #include <QMouseEvent>
@@ -7,6 +17,11 @@
 #include <QWindow>
 #include <set>
 
+/**
+ * @class View
+ * @brief Creates a view for the player's movement and gameplay
+ * 
+ */
 class View : public QGraphicsView{
     
     public:

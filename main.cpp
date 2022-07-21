@@ -26,8 +26,6 @@ int main(int argc, char **argv) {
 	Scene *scene = new Scene();
 	QRectF sceneSize = QRectF(0, 0, 1280, 720);
 	View::instance().resize(1280, 720);
-	//View::instance().setWindowFlags(Qt::FramelessWindowHint);
-	//View::instance().showFullScreen();
 	View::instance().setScene(scene);
 	View::instance().setSceneRect(sceneSize);
 

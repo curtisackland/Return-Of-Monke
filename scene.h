@@ -25,6 +25,7 @@
 #include "leaderboardMenu.h"
 #include "deathScreen.h"
 /**
+ * @class Scene
  * @brief Scene class for holding all graphics objects
  * 
  */
