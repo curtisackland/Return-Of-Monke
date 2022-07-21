@@ -23,7 +23,6 @@
 
 
 /**
- * @class HUD
  * @brief HUD contains all items that should be shown on the player's screen at all times
  * 
  */

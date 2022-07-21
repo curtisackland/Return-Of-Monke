@@ -78,12 +78,6 @@ void HUDbar::setMax(double a){
     max_value = a;
 }
 
-/**
- * @brief method for resizing the HUD bar
- * 
- * @param width new width of HUD bar
- * @param height new height of HUD bar
- */
 void HUDbar::resize(double width, double height) {
     length = width;
     backgroundBar->setRect(0, 0, width, height);

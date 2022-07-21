@@ -16,6 +16,10 @@
 #include <QtCore/qmath.h>
 #include <boost/numeric/ublas/vector.hpp>
 #include "HUDbar.h"
+#include "map.h"
+#include "Node.h"
+#include <queue>
+#include <set>
 
 #ifndef ENEMY_H
 #define ENEMY_H
@@ -47,7 +51,7 @@ class Enemy : public QGraphicsItemGroup{
         ~Enemy();
         
         void attack(Player *target);
-        void move(Player *target);
+        void move(QPoint, Map*);
         bool inRange(Player *target);
         virtual bool collidesWithItem(const QGraphicsItem *other, Qt::ItemSelectionMode mode = Qt::IntersectsItemShape) const;
         void hit(int dmg);

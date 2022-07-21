@@ -1,6 +1,6 @@
 /**
  * @file mainGame.cpp
- * @author Evan Goldrick (egoldric@uwo.ca), Curtis Ackland (cacklan@uwo.ca), David Lin (dlin72@uwo.ca)
+ * @author Evan Goldrick (egoldric@uwo.ca), Curtis Ackland (cacklan@uwo.ca)
  * @brief Implementations of MainGame member functions
  * @version 0.1
  * @date 2021-11-09
@@ -21,11 +21,15 @@ MainGame::MainGame(QGraphicsItem* parent)
     map->setZValue(-100);
     hud = new HUD(this);
     hud->setZValue(100);
-    p1 = new Player(70, 70, 0, this);
+    p1 = new Player(170, 170, 0, this);
     playerHitbox = p1->getPlayerHitBox()/2;
     p1->setZValue(1);
 
+
     p1->setSelectedGun(1);
+
+    //TEMPORARY TESTING AREA
+    enemies.push_back(new Enemy("Grunt", 75, 125, -45, 100, 5, 1, 50, this));
     
     // Generate spawnable tiles
     spawnableTiles.clear();
@@ -64,7 +68,7 @@ MainGame::~MainGame()
 void MainGame::SpawnEnemies(int wave, std::list<Enemy*>& enemies){
 
     //perform some sort of algorithm with wave to produce number of enemies
-    int enemyAmount = (4 * wave);
+    int enemyAmount = (3 * wave);
 
     //spawn locations of enemies
     int xLocation, yLocation;
@@ -119,11 +123,14 @@ void MainGame::SpawnEnemies(int wave, std::list<Enemy*>& enemies){
         }
 
         //spawns enemy
+        enemies.push_back(new Enemy("Grunt", xLocation, yLocation, -45, 100, 5, 2, 50, this));
         
-        if (i % 4 == 0) {
+        if (wave>3){
             enemies.push_back(new Enemy("Brute", xLocation, yLocation, -45, 500, 10, 2, 70, this));
-        } else {
-            enemies.push_back(new Enemy("Grunt", xLocation, yLocation, -45, 100, 5, 2, 50, this));
+        }
+
+        if (wave>6){
+            enemies.push_back(new Enemy("Tank", xLocation, yLocation, -45, 500, 15, 1, 200, this));
         }
 
     }
@@ -157,7 +164,7 @@ void MainGame::Explosion(double bulletX, double bulletY, std::list<Enemy*>& enem
 }
 
 void MainGame::spawnDrop(Drop::DropTypes dropType) {
-    std::vector<int> *tileLocation = nullptr;
+    std::vector<int> *tileLocation;
     int loops = 0;
     int maxLoops = map->getMapWidth() * map->getMapLength();
     bool itemCanSpawn = false;
@@ -172,9 +179,7 @@ void MainGame::spawnDrop(Drop::DropTypes dropType) {
             }
         }
     };
-    if (itemCanSpawn && tileLocation != nullptr) {
-        drops.push_back(new Drop((*tileLocation)[0] * 50 + 25, (*tileLocation)[1] * 50 + 25, dropType, this));
-    }
+    drops.push_back(new Drop((*tileLocation)[0] * 50 + 25, (*tileLocation)[1] * 50 + 25, dropType, this));
 }
 
 /**
@@ -263,19 +268,17 @@ int MainGame::gameLoop()
         p1->setSelectedGun(2);
     }
 
-    if (View::instance().getKey().count(Qt::Key_3) && !consumedKeys.count(Qt::Key_3) && p1->getInventory()->getHealthAmount() > 0) {
+    if (View::instance().getKey().count(Qt::Key_3) && !consumedKeys.count(Qt::Key_3)) {
         consumedKeys.insert(Qt::Key_3);
         p1->setHealth(p1->getHealth() + 50); // TODO make the values not hard coded
-        p1->getInventory()->setHealthAmount(p1->getInventory()->getHealthAmount() - 1);
-    } else if (!View::instance().getKey().count(Qt::Key_3) && consumedKeys.count(Qt::Key_3)) {
+    } else if (!View::instance().getKey().count(Qt::Key_3)) {
         consumedKeys.erase(Qt::Key_3);
     }
 
-    if (View::instance().getKey().count(Qt::Key_4) && !consumedKeys.count(Qt::Key_4) && p1->getInventory()->getShieldAmount() > 0) {
+    if (View::instance().getKey().count(Qt::Key_4) && !consumedKeys.count(Qt::Key_4)) {
         consumedKeys.insert(Qt::Key_4);
         p1->setShield(p1->getShield() + 50);
-        p1->getInventory()->setShieldAmount(p1->getInventory()->getShieldAmount() - 1);
-    } else if (!View::instance().getKey().count(Qt::Key_4) && consumedKeys.count(Qt::Key_3)) {
+    } else if (!View::instance().getKey().count(Qt::Key_4)) {
         consumedKeys.erase(Qt::Key_4);
     }
 
@@ -315,27 +318,27 @@ int MainGame::gameLoop()
                     delete oldGun;
                 } else if (d->getDropType() == Drop::DropTypes::PistolAmmo) { // TODO set ammo amount
                     if (p1->hasGunType("Pistol") == 1) {
-                        p1->getInventory()->getGunPrim()->setAmmoCount(std::min(p1->getInventory()->getGunPrim()->getAmmoCount() + p1->getInventory()->getGunPrim()->getMaxAmmoCapacity() / 2, p1->getInventory()->getGunPrim()->getMaxAmmoCapacity()));
+                        p1->getInventory()->getGunPrim()->setAmmoCount(std::min(p1->getInventory()->getGunPrim()->getAmmoCount() + 10, p1->getInventory()->getGunPrim()->getMaxAmmoCapacity()));
                     } else if (p1->hasGunType("Pistol") == 2) {
-                        p1->getInventory()->getGunSec()->setAmmoCount(std::min(p1->getInventory()->getGunSec()->getAmmoCount() + p1->getInventory()->getGunSec()->getMaxAmmoCapacity() / 2, p1->getInventory()->getGunSec()->getMaxAmmoCapacity()));
+                        p1->getInventory()->getGunSec()->setAmmoCount(std::min(p1->getInventory()->getGunSec()->getAmmoCount() + 10, p1->getInventory()->getGunSec()->getMaxAmmoCapacity()));
                     }
                 } else if (d->getDropType() == Drop::DropTypes::ARAmmo) {
                     if (p1->hasGunType("AR") == 1) {
-                        p1->getInventory()->getGunPrim()->setAmmoCount(std::min(p1->getInventory()->getGunPrim()->getAmmoCount() + p1->getInventory()->getGunPrim()->getMaxAmmoCapacity() / 2, p1->getInventory()->getGunPrim()->getMaxAmmoCapacity()));
+                        p1->getInventory()->getGunPrim()->setAmmoCount(std::min(p1->getInventory()->getGunPrim()->getAmmoCount() + 10, p1->getInventory()->getGunPrim()->getMaxAmmoCapacity()));
                     } else if (p1->hasGunType("AR") == 2) {
-                        p1->getInventory()->getGunSec()->setAmmoCount(std::min(p1->getInventory()->getGunSec()->getAmmoCount() + p1->getInventory()->getGunSec()->getMaxAmmoCapacity() / 2, p1->getInventory()->getGunSec()->getMaxAmmoCapacity()));
+                        p1->getInventory()->getGunSec()->setAmmoCount(std::min(p1->getInventory()->getGunSec()->getAmmoCount() + 10, p1->getInventory()->getGunSec()->getMaxAmmoCapacity()));
                     }
                 } else if (d->getDropType() == Drop::DropTypes::LaserAmmo) {
                     if (p1->hasGunType("Laser") == 1) {
-                        p1->getInventory()->getGunPrim()->setAmmoCount(std::min(p1->getInventory()->getGunPrim()->getAmmoCount() + p1->getInventory()->getGunPrim()->getMaxAmmoCapacity() / 2, p1->getInventory()->getGunPrim()->getMaxAmmoCapacity()));
+                        p1->getInventory()->getGunPrim()->setAmmoCount(std::min(p1->getInventory()->getGunPrim()->getAmmoCount() + 10, p1->getInventory()->getGunPrim()->getMaxAmmoCapacity()));
                     } else if (p1->hasGunType("Laser") == 2) {
-                        p1->getInventory()->getGunSec()->setAmmoCount(std::min(p1->getInventory()->getGunSec()->getAmmoCount() + p1->getInventory()->getGunSec()->getMaxAmmoCapacity() / 2, p1->getInventory()->getGunSec()->getMaxAmmoCapacity()));
+                        p1->getInventory()->getGunSec()->setAmmoCount(std::min(p1->getInventory()->getGunSec()->getAmmoCount() + 10, p1->getInventory()->getGunSec()->getMaxAmmoCapacity()));
                     }
                 } else if (d->getDropType() == Drop::DropTypes::RocketAmmo) {
                     if (p1->hasGunType("RL") == 1) {
-                        p1->getInventory()->getGunPrim()->setAmmoCount(std::min(p1->getInventory()->getGunPrim()->getAmmoCount() + p1->getInventory()->getGunPrim()->getMaxAmmoCapacity() / 2, p1->getInventory()->getGunPrim()->getMaxAmmoCapacity()));
+                        p1->getInventory()->getGunPrim()->setAmmoCount(std::min(p1->getInventory()->getGunPrim()->getAmmoCount() + 10, p1->getInventory()->getGunPrim()->getMaxAmmoCapacity()));
                     } else if (p1->hasGunType("RL") == 2) {
-                        p1->getInventory()->getGunSec()->setAmmoCount(std::min(p1->getInventory()->getGunSec()->getAmmoCount() + p1->getInventory()->getGunSec()->getMaxAmmoCapacity() / 2, p1->getInventory()->getGunSec()->getMaxAmmoCapacity()));
+                        p1->getInventory()->getGunSec()->setAmmoCount(std::min(p1->getInventory()->getGunSec()->getAmmoCount() + 10, p1->getInventory()->getGunSec()->getMaxAmmoCapacity()));
                     }
                 }
                 delete d;
@@ -350,10 +353,9 @@ int MainGame::gameLoop()
     {
         std::list<Enemy*> deadEnemies;
         for (Enemy* e : enemies) {
-            e->move(p1);
+            e->move(QPoint(p1->pos().x(), p1->pos().y()), map);
             e->attack(p1);
-            
-            
+
             if (p1->isDead()){
                 return hud->getScore()->getScore();
             }
@@ -406,23 +408,26 @@ int MainGame::gameLoop()
         delete b;
     }
     
+    
     for (Bullet* i : bullets) {
         i->moveBullet();
     }
-
-    
     hud->getHealthBar()->setCurrent(p1->getHealth());
     hud->getShieldBar()->setCurrent(p1->getShield());
     hud->getReloadTimer()->setFraction((double)p1->getSelectedGun()->getReloadTimeLeft() / (double)p1->getSelectedGun()->getReloadSpeed());
-    hud->getGunInfo()->updatePlayerInformation(p1);
+    hud->getGunInfo()->updateGunInformation(p1->getSelectedGun());
     hud->setPos(p1->pos().x() - View::instance().getAdjustedWindowWidth()/2, p1->pos().y() - View::instance().getAdjustedWindowHeight()/2);
     View::instance().setSceneRect(QRectF(p1->pos().x() - View::instance().getAdjustedWindowWidth()/2, p1->pos().y() - View::instance().getAdjustedWindowHeight()/2, View::instance().getAdjustedWindowWidth(), View::instance().getAdjustedWindowHeight()));
     hud->resizeHud(View::instance().getAdjustedWindowWidth(), View::instance().getAdjustedWindowHeight()); // TODO check if this can be moved to a resize event handler function
+    /*if(p1->collidesWithItem(tempRect)){ //COLLISION WITH PLAYER 
+        //printf("Player collision passed.\n");
+    }
+    */
 
     //execute when wave is cleared
     if (enemies.empty()){
         hud->getScore()->increaseWave();
-        SpawnEnemies(hud->getScore()->getWave(), enemies);
+        //SpawnEnemies(hud->getScore()->getWave(), enemies);
     }
 
     return -1;

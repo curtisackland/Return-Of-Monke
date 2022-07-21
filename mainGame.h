@@ -1,6 +1,6 @@
 /**
  * @file mainGame.h
- * @author Evan Goldrick (egoldric@uwo.ca), Curtis Ackland (cacklan@uwo.ca), David Lin (dlin72@uwo.ca)
+ * @author Evan Goldrick (egoldric@uwo.ca), Curtis Ackland (cacklan@uwo.ca)
  * @brief MainGame class definition
  * @version 0.1
  * @date 2021-11-09
@@ -21,6 +21,7 @@
 #include <QWindow>
 #include <QSound>
 #include <math.h>
+//#include <QGraphicsView>
 
 #include <iostream>
 #include <stdio.h>
@@ -38,7 +39,6 @@
 #include "gun.h"
 #include "map.h"
 /**
- * @class MainGame
  * @brief MainGame stores everything about current game state
  * 
  */

@@ -17,7 +17,6 @@
 #include <algorithm>
 
 /**
- * @class HUDbar
  * @brief A progress bar style bar implemented in QGraphics
  * 
  */
