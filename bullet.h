@@ -17,6 +17,7 @@
 #include <QPen>
 #include <math.h>
 /**
+ * @class Bullet
  * @brief Bullet stores everything needed for a bullet to exist
  * 
  */

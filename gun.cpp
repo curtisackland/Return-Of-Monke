@@ -58,12 +58,12 @@ Gun::Gun(std::string gun, QRectF player,  QGraphicsItem * parent){
         fire_rate = 10;
         damage = 30;
     } else if(gun_type == "RL"){
-        gun_model->setRect(-player.width()/2, -player.height()/2 - 16, 5, 20);
+        gun_model->setRect(-player.width()/2, -player.height()/2 - 16, 5, 50);
 
         QTransform transform;
-        transform.translate(0, -10);
+        transform.translate(0, -31);
         QBrush brush;
-        brush.setTextureImage(QImage("resources/AR_Hold.png"));
+        brush.setTextureImage(QImage("resources/RL_Hold.png"));
         brush.setTransform(transform);
         gun_model->setBrush(brush);
 
@@ -79,9 +79,9 @@ Gun::Gun(std::string gun, QRectF player,  QGraphicsItem * parent){
         gun_model->setRect(-player.width()/2, -player.height()/2 - 16, 5, 20);
 
         QTransform transform;
-        transform.translate(0, -10);
+        transform.translate(0, -11);
         QBrush brush;
-        brush.setTextureImage(QImage("resources/AR_Hold.png"));
+        brush.setTextureImage(QImage("resources/Laser_Hold.png"));
         brush.setTransform(transform);
         gun_model->setBrush(brush);
 
@@ -259,6 +259,11 @@ void Gun::hideGun(){
     gun_model->hide();
 }
 
+/**
+ * @brief Gets the gun model the player is holding
+ * 
+ * @return QGraphicsRectItem* 
+ */
 QGraphicsRectItem* Gun::getGunModel(){
     return gun_model;
 }
@@ -268,5 +273,5 @@ QGraphicsRectItem* Gun::getGunModel(){
  * 
  */
 Gun::~Gun(){
-
+    delete gun_model;
 }

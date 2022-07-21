@@ -14,21 +14,26 @@
 #include <QFont>
 #include <QFontMetrics>
 #include <string>
+#include "player.h"
 #include "gun.h"
 
 /**
+ * @class GunInfo
  * @brief Used to show information about the currently selected gun on the hud
  * 
  */
 class GunInfo : public QGraphicsItemGroup {
     private:
-    QFont *font;
-    QFontMetrics *fm;
-    QGraphicsTextItem *weaponType;
-    QGraphicsTextItem *ammoCount;
+    QFont *font = nullptr;
+    QFontMetrics *fm = nullptr;
+    QGraphicsTextItem *weaponType = nullptr;
+    QGraphicsTextItem *ammoCount = nullptr;
+    QGraphicsTextItem *healthPackCount = nullptr;
+    QGraphicsTextItem *shieldPackCount = nullptr;
+    
     public:
     GunInfo(double, double, QGraphicsItem *parent = nullptr);
     ~GunInfo();
-    void updateGunInformation(Gun *);
+    void updatePlayerInformation(Player *);
 };
 #endif

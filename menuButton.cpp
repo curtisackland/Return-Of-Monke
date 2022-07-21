@@ -57,7 +57,14 @@ QRectF MenuButton::getRect() {
     return buttonBox->rect();
 }
 
-
+/**
+ * @brief sets the rectangle surrounding the text for the button
+ * 
+ * @param x pos of button
+ * @param y pos of button
+ * @param w width of box
+ * @param h height of box
+ */
 void MenuButton::setRect(double x, double y, double w, double h) {
     QFontMetrics fm(font);
     double textWidth = fm.horizontalAdvance(buttonText->toPlainText());

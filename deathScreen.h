@@ -1,3 +1,13 @@
+/**
+ * @file deathScreen.h
+ * @author Curtis Ackland (cacklan@uwo.ca)
+ * @brief Implementation of death screen
+ * @version 0.1
+ * @date 2021-11-30
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
 #ifndef DEATH_SCREEN_H
 #define DEATH_SCREEN_H
 #include <QGraphicsSceneMouseEvent>
@@ -10,7 +20,8 @@
 #include <QInputDialog>
 #include <QDialog>
 /**
- * @brief Creates a death screen
+ * @class DeathScreen
+ * @brief Creates a death screen for player to submit their final score
  * 
  */
 class DeathScreen{

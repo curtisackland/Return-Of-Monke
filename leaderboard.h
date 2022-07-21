@@ -18,6 +18,11 @@
 #include <sstream>
 #include <algorithm>
 
+/**
+ * @class Leaderboard
+ * @brief Leaderboard class for reading and writing leaderboard file
+ * 
+ */
 class Leaderboard{
     public:
         virtual ~Leaderboard();

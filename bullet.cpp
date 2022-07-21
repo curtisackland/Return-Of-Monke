@@ -30,25 +30,21 @@ Bullet::Bullet(double originX, double originY, double bulletX, double bulletY, s
         bullet = new QGraphicsRectItem(-1, -2.5, 3, 5, this);
         setPos(originX, originY);
         bullet->setBrush(brush);
-        //bullet->setPen(pen);
     } else if(gun == "AR"){
         brush.setColor(Qt::gray);
         bullet = new QGraphicsRectItem(-1.5, -3.5, 3, 7, this);
         setPos(originX, originY);
         bullet->setBrush(brush);
-        //bullet->setPen(pen);
     } else if(gun == "RL"){
         brush.setColor(Qt::darkGreen);
         bullet = new QGraphicsRectItem(-1.5, -3.5, 3, 7, this);
         setPos(originX, originY);
         bullet->setBrush(brush);
-        //bullet->setPen(pen);
     } else if(gun == "Laser"){
         brush.setColor(Qt::red);
         bullet = new QGraphicsRectItem(-1.5, -3.5, 3, 7, this);
         setPos(originX, originY);
         bullet->setBrush(brush);
-        //bullet->setPen(pen);
     } else {
         throw std::invalid_argument("Invalid bullet type");
     }

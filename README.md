@@ -16,14 +16,18 @@ qmake ReturnOfMonke.pro
 make
 ./ReturnOfMonke
 ~~~
-## How To Test
-~~~bash
-qmake TestSuite.pro
-make
-./TestSuite
-~~~
 
-The test suite only checks some things, the other things can be verified visually, like the length of something, or its direction of travel.
+## Controls
+M1 - Shoot
+W - Move up
+A - Move left
+S - Move down
+D - Move right
+F - Pick up drop
+1 - Switch to Primary Gun
+2 - Switch to Secondary Gun
+3 - Use Health pack
+4 - Use Shield pack
 
 ## How we are building the project
 

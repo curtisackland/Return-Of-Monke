@@ -21,12 +21,18 @@ GunInfo::GunInfo(double x, double y, QGraphicsItem *parent) : QGraphicsItemGroup
     font = new QFont("Helvetica Neue", 20);
     fm = new QFontMetrics(*font);
     weaponType = new QGraphicsTextItem(this);
-    //weaponType->setPos(0, 0);
     weaponType->setFont(*font);
     
     ammoCount = new QGraphicsTextItem(this);
-    //ammoCount->setPos(0, fm->height() + 10);
     ammoCount->setFont(*font);
+
+    healthPackCount = new QGraphicsTextItem(this);
+    healthPackCount->setFont(*font);
+    healthPackCount->setDefaultTextColor(QColor(255, 0, 0));
+
+    shieldPackCount = new QGraphicsTextItem(this);
+    shieldPackCount->setFont(*font);
+    shieldPackCount->setDefaultTextColor(QColor(0, 0, 255));
 }
 
 /**
@@ -45,16 +51,27 @@ GunInfo::~GunInfo() {
  * 
  * @param gun 
  */
-void GunInfo::updateGunInformation(Gun *gun) {
-    QString type = QString::fromStdString(gun->getGunType());
+void GunInfo::updatePlayerInformation(Player *p) {
+    QString type = QString::fromStdString(p->getSelectedGun()->getGunType());
     weaponType->setPlainText(type);
-    weaponType->setPos(-fm->horizontalAdvance(type), 0);
+    weaponType->setPos(200 - fm->horizontalAdvance(type), 0);
 
     QString count("");
-    count.append(QString::number(gun->getCurrentMagazineCapacity()));
+    count.append(QString::number(p->getSelectedGun()->getCurrentMagazineCapacity()));
     count.append("/");
-    count.append(QString::number(gun->getAmmoCount()));
+    count.append(QString::number(p->getSelectedGun()->getAmmoCount()));
     ammoCount->setPlainText(count);
-    ammoCount->setPos(-fm->horizontalAdvance(count), fm->height() + 10);
+    ammoCount->setPos(200 - fm->horizontalAdvance(count), fm->height() + 10);
+
+    QString numHealthPacks = QString::number(p->getInventory()->getHealthAmount());
+    numHealthPacks.append(" Medkit");    
+    healthPackCount->setPlainText(numHealthPacks);
+    healthPackCount->setPos(10, 2 * fm->height() + 10);
+
+    QString numShieldPacks = QString::number(p->getInventory()->getShieldAmount());
+    numShieldPacks.append(" Shield");
+    shieldPackCount->setPlainText(numShieldPacks);
+    shieldPackCount->setPos(10, 3 * fm->height() + 10);
+    
 }
 

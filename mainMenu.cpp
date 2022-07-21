@@ -30,6 +30,11 @@ MainMenu::~MainMenu() {
     delete quitButton;
 }
 
+/**
+ * @brief menu loop for checking user inputs
+ * 
+ * @return int value depending on which button is pressed
+ */
 int MainMenu::menuLoop(){
     View::instance().setSceneRect(QRectF(0, 0, View::instance().getAdjustedWindowWidth(), View::instance().getAdjustedWindowHeight()));
     

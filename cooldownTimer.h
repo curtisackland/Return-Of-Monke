@@ -1,9 +1,20 @@
+/**
+ * @file cooldownTimer.h
+ * @author Evan Goldrick (egoldric@uwo.ca)
+ * @brief Implementation of CooldownTimer
+ * @version 0.1
+ * @date 2021-11-30
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
 #ifndef COOLDOWN_TIMER_HEADER
 #define COOLDOWN_TIMER_HEADER
 #include <QGraphicsItemGroup>
 #include <QBrush>
 
 /**
+ * @class CooldownTimer
  * @brief timer to show the player how much time is left to cool down
  * 
  */
